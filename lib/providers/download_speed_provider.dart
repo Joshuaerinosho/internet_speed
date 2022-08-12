@@ -9,9 +9,11 @@ final downloadSpeedProvider =
 
 class DownloadSpeedNotifier extends ChangeNotifier {
   double _downloadSpeed = 0;
+  int _testProgress = 0;
   String _buttonText = 'Start';
 
   double get downloadSpeed => _downloadSpeed;
+  int get testProgress => _testProgress;
   String get buttonText => _buttonText;
 
   //Setup speedtest
@@ -28,14 +30,16 @@ class DownloadSpeedNotifier extends ChangeNotifier {
   }
 
   Future<void> getDownSpeed() async {
-    double downloadRate = 0;
     await _speedtest.getDataspeedtest(
       downloadOnProgress: ((percent, transferRate) {
         _downloadSpeed = percent;
         notifyListeners();
       }),
       uploadOnProgress: ((p, tr) {}),
-      progressResponse: ((r, j) {}),
+      progressResponse: ((r, j) {
+        _testProgress = r;
+        notifyListeners();
+      }),
       onError: ((e) {}),
     );
   }
