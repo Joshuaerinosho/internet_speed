@@ -1,32 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'theme_data.dart';
 import 'views/home_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    const ProviderScope(child: App()),
+  );
 }
 
-class App extends StatelessWidget {
+class App extends ConsumerWidget {
   const App({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
     return MaterialApp(
       title: 'Internet Speed',
       theme: appThemeData,
       home: const HomeScreen(),
     );
-  }
-}
-
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(home: HomeScreen());
   }
 }
