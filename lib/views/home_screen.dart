@@ -106,7 +106,7 @@ class HomeScreen extends ConsumerWidget {
               ),
               const SizedBox(width: 5),
               Text(
-                '${internetSpeed.testProgress}%',
+                '${internetSpeed.testProgress > 100 ? 100 : internetSpeed.testProgress}%',
                 style: const TextStyle(
                   fontSize: 17,
                   color: Color(0xFF43E695),
