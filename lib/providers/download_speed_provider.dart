@@ -7,11 +7,9 @@ final downloadSpeedProvider =
   return DownloadSpeedNotifier();
 });
 
-final downloadSpeedUpdateProvider = StreamProvider<double>((ref) {
-  return ref.read(downloadSpeedProvider).downSpeedStream();
-});
-
 class DownloadSpeedNotifier extends ChangeNotifier {
+  double _downloadSpeed = 0;
+  double get downloadSpeed => _downloadSpeed;
   //Setup speedtest
   final _speedtest = FlutterSpeedtest(
     baseUrl: 'http://speedtest.jaosing.com:8080', // your server url
@@ -20,18 +18,15 @@ class DownloadSpeedNotifier extends ChangeNotifier {
     pathResponseTime: '/ping',
   );
 
-  Future<double> getDownSpeed() async {
+  Future<void> getDownSpeed() async {
     double downloadRate = 0;
     await _speedtest.getDataspeedtest(
       downloadOnProgress: ((percent, transferRate) {
-        downloadRate = percent;
+        _downloadSpeed = percent;
       }),
       uploadOnProgress: ((p, tr) {}),
       progressResponse: ((r, j) {}),
       onError: ((e) {}),
     );
-    return downloadRate;
   }
-
-  Stream<double> downSpeedStream() => Stream.fromFuture(getDownSpeed());
 }
