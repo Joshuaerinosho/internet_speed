@@ -76,15 +76,19 @@ class HomeScreen extends ConsumerWidget {
           Positioned(
             bottom: screenHeight * 0.3,
             child: TextButton(
-              onPressed: () => internetSpeed.getDownSpeed(),
+              onPressed: () {
+                internetSpeed.getDownSpeed();
+                internetSpeed.startTest();
+              },
               style: TextButton.styleFrom(
                 backgroundColor: const Color.fromRGBO(51, 232, 112, 1),
               ),
               child: Row(
                 children: [
-                  const Text(
-                    'Test',
-                    style: TextStyle(fontSize: 25),
+                  Text(
+                    internetSpeed.buttonText,
+                    style: TextStyle(
+                        fontSize: 20, color: Theme.of(context).primaryColor),
                   ),
                   const SizedBox(width: 10),
                   SizedBox(

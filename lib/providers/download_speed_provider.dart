@@ -9,7 +9,11 @@ final downloadSpeedProvider =
 
 class DownloadSpeedNotifier extends ChangeNotifier {
   double _downloadSpeed = 0;
+  String _buttonText = 'Start';
+
   double get downloadSpeed => _downloadSpeed;
+  String get buttonText => _buttonText;
+
   //Setup speedtest
   final _speedtest = FlutterSpeedtest(
     baseUrl: 'http://speedtest.jaosing.com:8080', // your server url
@@ -18,11 +22,17 @@ class DownloadSpeedNotifier extends ChangeNotifier {
     pathResponseTime: '/ping',
   );
 
+  void startTest() async {
+    _buttonText = 'Testing...';
+    notifyListeners();
+  }
+
   Future<void> getDownSpeed() async {
     double downloadRate = 0;
     await _speedtest.getDataspeedtest(
       downloadOnProgress: ((percent, transferRate) {
         _downloadSpeed = percent;
+        notifyListeners();
       }),
       uploadOnProgress: ((p, tr) {}),
       progressResponse: ((r, j) {}),
