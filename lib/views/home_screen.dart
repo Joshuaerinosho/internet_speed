@@ -17,10 +17,12 @@ class HomeScreen extends ConsumerWidget {
     final internetSpeed = ref.watch(downloadSpeedProvider);
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Stack(alignment: AlignmentDirectional.center, children: [
-        SfRadialGauge(
-          axes: <RadialAxis>[
-            RadialAxis(
+      body: Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          SfRadialGauge(
+            axes: <RadialAxis>[
+              RadialAxis(
                 showAxisLine: false,
                 ticksPosition: ElementsPosition.outside,
                 labelsPosition: ElementsPosition.outside,
@@ -45,14 +47,15 @@ class HomeScreen extends ConsumerWidget {
                 useRangeColorForAxis: true,
                 pointers: <GaugePointer>[
                   NeedlePointer(
-                      enableAnimation: true,
-                      value: internetSpeed.downloadSpeed,
-                      tailStyle: const TailStyle(length: 0.2, width: 5),
-                      needleEndWidth: 5,
-                      needleLength: 0.7,
-                      needleColor: const Color.fromARGB(255, 92, 105, 109),
-                      knobStyle: const KnobStyle(
-                          color: Color(0xFF289AB1), borderColor: Colors.blue))
+                    enableAnimation: true,
+                    value: internetSpeed.downloadSpeed,
+                    tailStyle: const TailStyle(length: 0.2, width: 5),
+                    needleEndWidth: 5,
+                    needleLength: 0.7,
+                    needleColor: const Color.fromARGB(255, 92, 105, 109),
+                    knobStyle: const KnobStyle(
+                        color: Color(0xFF289AB1), borderColor: Colors.blue),
+                  )
                 ],
                 ranges: <GaugeRange>[
                   GaugeRange(
@@ -66,56 +69,58 @@ class HomeScreen extends ConsumerWidget {
                       rangeOffset: 0.08,
                       endWidth: 0.2,
                       sizeUnit: GaugeSizeUnit.factor)
-                ]),
-          ],
-        ),
-        Positioned(
-          bottom: screenHeight * 0.3,
-          child: TextButton(
-            onPressed: () {
-              internetSpeed.getDownSpeed();
-              internetSpeed.startTest();
-            },
-            child: Column(
+                ],
+              ),
+            ],
+          ),
+          Positioned(
+            bottom: screenHeight * 0.3,
+            child: TextButton(
+              onPressed: () {
+                internetSpeed.getDownSpeed();
+                internetSpeed.startTest();
+              },
+              child: Column(
+                children: [
+                  Text(
+                    internetSpeed.buttonText,
+                    style: TextStyle(
+                        fontSize: 20, color: Theme.of(context).primaryColor),
+                  ),
+                  SizedBox(
+                    height: 40,
+                    width: 40,
+                    child: Lottie.asset('assets/anime.json'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: screenHeight * 0.75,
+            left: screenWidth * 0.05,
+            child: Row(
               children: [
-                Text(
-                  internetSpeed.buttonText,
+                const Text(
+                  'Progress:',
                   style: TextStyle(
-                      fontSize: 20, color: Theme.of(context).primaryColor),
+                    fontSize: 17,
+                    color: Color(0xFF289AB1),
+                  ),
                 ),
-                SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: Lottie.asset('assets/anime.json'),
+                const SizedBox(width: 5),
+                Text(
+                  '${internetSpeed.testProgress > 100 ? 100 : internetSpeed.testProgress}%',
+                  style: const TextStyle(
+                    fontSize: 17,
+                    color: Color(0xFF43E695),
+                  ),
                 ),
               ],
             ),
           ),
-        ),
-        Positioned(
-          top: screenHeight * 0.75,
-          left: screenWidth * 0.05,
-          child: Row(
-            children: [
-              const Text(
-                'Progress:',
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Color(0xFF289AB1),
-                ),
-              ),
-              const SizedBox(width: 5),
-              Text(
-                '${internetSpeed.testProgress > 100 ? 100 : internetSpeed.testProgress}%',
-                style: const TextStyle(
-                  fontSize: 17,
-                  color: Color(0xFF43E695),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

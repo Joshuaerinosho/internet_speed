@@ -18,7 +18,7 @@ class DownloadSpeedNotifier extends ChangeNotifier {
 
   //Setup speedtest
   final _speedtest = FlutterSpeedtest(
-    baseUrl: 'http://speedtest.jaosing.com:8080', // your server url
+    baseUrl: 'http://speedtest.jaosing.com:8080',
     pathDownload: '/download',
     pathUpload: '/upload',
     pathResponseTime: '/ping',
