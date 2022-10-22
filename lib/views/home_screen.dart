@@ -74,30 +74,11 @@ class HomeScreen extends ConsumerWidget {
             ],
           ),
           Positioned(
-            bottom: screenHeight * 0.3,
-            child: TextButton(
-              onPressed: () {
-                internetSpeed.getDownSpeed();
-                internetSpeed.startTest();
-              },
-              child: Column(
-                children: [
-                  Text(
-                    internetSpeed.buttonText,
-                    style: TextStyle(
-                        fontSize: 20, color: Theme.of(context).primaryColor),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: Lottie.asset('assets/anime.json'),
-                  ),
-                ],
-              ),
-            ),
+            bottom: screenHeight * 0.15,
+            child: StartButton(internetSpeed: internetSpeed),
           ),
           Positioned(
-            top: screenHeight * 0.75,
+            bottom: screenHeight * 0.8,
             left: screenWidth * 0.05,
             child: Row(
               children: [
@@ -117,6 +98,53 @@ class HomeScreen extends ConsumerWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class StartButton extends StatelessWidget {
+  const StartButton({
+    Key? key,
+    required this.internetSpeed,
+  }) : super(key: key);
+
+  final DownloadSpeedNotifier internetSpeed;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        internetSpeed.getDownSpeed();
+        internetSpeed.startTest();
+      },
+      child: Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          SizedBox(
+            height: 100,
+            width: 100,
+            child: Lottie.asset('assets/anime.json'),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: const BoxDecoration(
+                color: Colors.grey,
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                    colors: [Colors.grey, Colors.black], radius: 0.75)),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  internetSpeed.buttonText,
+                  style: TextStyle(
+                      fontSize: 20, color: Theme.of(context).primaryColor),
+                ),
+              ),
             ),
           ),
         ],
